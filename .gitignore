@@ -31,6 +31,8 @@ jspm_packages/
 .yarn-integrity
 .cache
 .idea/
+__snapshots__/
+cdk.context.json
 !/.projenrc.js
 /test-reports/
 junit.xml
