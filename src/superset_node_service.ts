@@ -114,7 +114,7 @@ export class SupersetNodeService {
       cluster: this.cluster,
       maxHealthyPercent: 200,
       minHealthyPercent: 100,
-      serviceName: 'supersetNodeService',
+      serviceName: 'superset-node-service',
       deploymentController: {
         type: DeploymentControllerType.ECS,
       },

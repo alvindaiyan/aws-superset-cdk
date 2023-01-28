@@ -94,6 +94,7 @@ export class SupersetRedis {
       cluster: this.cluster,
       maxHealthyPercent: 200,
       minHealthyPercent: 100,
+      serviceName: 'superset-redis-service',
       deploymentController: {
         type: DeploymentControllerType.ECS,
       },

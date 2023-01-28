@@ -217,6 +217,7 @@ export class SupersetService {
       cluster: this.cluster,
       maxHealthyPercent: 200,
       minHealthyPercent: 100,
+      serviceName: 'superset-service',
       deploymentController: {
         type: DeploymentControllerType.ECS,
       },

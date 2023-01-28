@@ -101,6 +101,7 @@ export class SupersetDatabase {
       platformVersion: FargatePlatformVersion.VERSION1_4,
       propagateTags: PropagatedTagSource.SERVICE,
       cluster: this.cluster,
+      serviceName: 'superset-postgres-service',
       deploymentController: {
         type: 'ECS',
       },

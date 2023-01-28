@@ -102,7 +102,7 @@ export class SupersetInitService {
       cluster: this.cluster,
       maxHealthyPercent: 200,
       minHealthyPercent: 100,
-      serviceName: 'supersetInitService',
+      serviceName: 'superset-init-Service',
       deploymentController: {
         type: DeploymentControllerType.ECS,
       },
@@ -190,7 +190,7 @@ export class SupersetInitService {
   private supersetInitCleanUpContainerDef(): ContainerDefinitionOptions {
     return {
       command: [
-        'ecs', 'update-service', '--cluster', this.clusterName, '--service', 'supersetInitService', '--desired-count', '0',
+        'ecs', 'update-service', '--cluster', this.clusterName, '--service', 'superset-init-service', '--desired-count', '0',
       ],
       essential: true,
       image: ContainerImage.fromRegistry('amazon/aws-cli'),

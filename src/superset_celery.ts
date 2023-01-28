@@ -158,7 +158,7 @@ export class SupersetCelery {
       cluster: this.cluster,
       maxHealthyPercent: 200,
       minHealthyPercent: 100,
-      serviceName: 'supersetCeleryService',
+      serviceName: 'superset-celery-service',
       deploymentController: {
         type: DeploymentControllerType.ECS,
       },

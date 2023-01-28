@@ -160,7 +160,7 @@ export class SupersetWorkerService {
       cluster: this.cluster,
       maxHealthyPercent: 200,
       minHealthyPercent: 100,
-      serviceName: 'supersetWorkerService',
+      serviceName: 'superset-worker-service',
       deploymentController: {
         type: DeploymentControllerType.ECS,
       },
