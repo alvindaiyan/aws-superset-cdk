@@ -78,6 +78,7 @@ export class SupersetDatabase {
     this.taskRole = this.getDBTaskRole();
     this.executionRole = this.getDBExecutionRole();
     this.taskDef = this.dbTaskDef();
+    this.taskDef.node.addDependency(this.fileSystem.mountTargetsAvailable);
 
     const initContainer = this.taskDef.addContainer('superset-db-container-initial', this.initContainerDef());
 

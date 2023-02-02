@@ -16,6 +16,7 @@ import { DnsRecordType, INamespace, RoutingPolicy, Service, ServiceProps } from 
 import * as cloudmap from 'aws-cdk-lib/aws-servicediscovery';
 import { Construct } from 'constructs';
 
+const initServiceName = 'superset-init-service';
 
 export interface SupersetInitServiceParam {
   partition: string;
@@ -34,6 +35,7 @@ export interface SupersetInitServiceParam {
 }
 
 export class SupersetInitService {
+  public readonly service:IService;
 
   private readonly taskRole: aws_iam.IRole;
   private readonly executionRole: aws_iam.IRole;
@@ -93,7 +95,8 @@ export class SupersetInitService {
       condition: ContainerDependencyCondition.SUCCESS,
     });
 
-    this.supersetInitService();
+    this.service = this.supersetInitService();
+    this.service.node.addDependency(this.fileSystem.mountTargetsAvailable);
   }
 
 
@@ -102,7 +105,7 @@ export class SupersetInitService {
       cluster: this.cluster,
       maxHealthyPercent: 200,
       minHealthyPercent: 100,
-      serviceName: 'superset-init-Service',
+      serviceName: initServiceName,
       deploymentController: {
         type: DeploymentControllerType.ECS,
       },
@@ -190,7 +193,7 @@ export class SupersetInitService {
   private supersetInitCleanUpContainerDef(): ContainerDefinitionOptions {
     return {
       command: [
-        'ecs', 'update-service', '--cluster', this.clusterName, '--service', 'superset-init-service', '--desired-count', '0',
+        'ecs', 'update-service', '--cluster', this.clusterName, '--service', initServiceName, '--desired-count', '0',
       ],
       essential: true,
       image: ContainerImage.fromRegistry('amazon/aws-cli'),

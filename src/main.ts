@@ -91,8 +91,9 @@ export class MyStack extends Stack {
       userPassword: parameters.allParameters.userPassword.valueAsString,
       installProphet: parameters.allParameters.installProphet.valueAsString,
     });
+    supersetService.service.node.addDependency(dbService.service, redisService.service);
 
-    new SupersetInitService(this, {
+    const initService = new SupersetInitService(this, {
       partition: this.partition,
       cluster: supersetCluster.cluster,
       supersetSvcFileSystem: supersetService.fileSystem,
@@ -107,6 +108,7 @@ export class MyStack extends Stack {
       userPassword: parameters.allParameters.userPassword.valueAsString,
       installProphet: parameters.allParameters.installProphet.valueAsString,
     });
+    initService.service.node.addDependency(dbService.service, redisService.service);
 
     const nodeService = new SupersetNodeService(this, {
       namespace: serviceDiscovery.namespace,
@@ -122,6 +124,7 @@ export class MyStack extends Stack {
       username: parameters.allParameters.username.valueAsString,
       userPassword: parameters.allParameters.userPassword.valueAsString,
     });
+    nodeService.service.node.addDependency(dbService.service, redisService.service);
 
     const workerService = new SupersetWorkerService(this, {
       namespace: serviceDiscovery.namespace,
@@ -137,6 +140,7 @@ export class MyStack extends Stack {
       username: parameters.allParameters.username.valueAsString,
       userPassword: parameters.allParameters.userPassword.valueAsString,
     });
+    workerService.service.node.addDependency(dbService.service, redisService.service);
 
     const beatService = new SupersetCelery(this, {
       namespace: serviceDiscovery.namespace,
@@ -152,6 +156,9 @@ export class MyStack extends Stack {
       username: parameters.allParameters.username.valueAsString,
       userPassword: parameters.allParameters.userPassword.valueAsString,
     });
+    beatService.service.node.addDependency(dbService.service, redisService.service);
+
+
     new SupersetDashboard(this, {
       beatServiceName: beatService.service.serviceName,
       workerServiceName: workerService.service.serviceName,

@@ -93,6 +93,7 @@ export class SupersetWorkerService {
     });
 
     this.service = this.supersetWorkerService();
+    this.service.node.addDependency(this.fileSystem.mountTargetsAvailable);
   }
 
   private supersetWorkerTaskDef():TaskDefinition {

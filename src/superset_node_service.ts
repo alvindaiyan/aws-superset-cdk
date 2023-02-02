@@ -89,6 +89,7 @@ export class SupersetNodeService {
     });
 
     this.service = this.supersetNodeService();
+    this.service.node.addDependency(this.fileSystem.mountTargetsAvailable);
   }
 
   private initContainerDef(): ContainerDefinitionOptions {

@@ -121,6 +121,7 @@ export class SupersetService {
 
     this.listener = this.supersetTCP8088Listener();
     this.service = this.supersetService();
+    this.service.node.addDependency(this.listener, this.fileSystem.mountTargetsAvailable);
   }
 
   private initContainerDef(): ContainerDefinitionOptions {

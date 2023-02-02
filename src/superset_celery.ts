@@ -92,6 +92,7 @@ export class SupersetCelery {
     });
 
     this.service = this.supersetCeleryService();
+    this.service.node.addDependency(this.fileSystem.mountTargetsAvailable);
   }
 
   private supersetCeleryTaskDef(): TaskDefinition {

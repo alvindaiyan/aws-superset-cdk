@@ -72,6 +72,7 @@ export class SupersetRedis {
     this.taskRole = this.getRedisTaskRole();
     this.executionRole = this.getRedisExecutionRole();
     this.taskDef = this.redisTaskDef();
+    this.taskDef.node.addDependency(this.fs.mountTargetsAvailable);
 
     const initContainer = this.taskDef.addContainer('superset-redis-init-container', this.initContainerDef());
     const redisContainer = this.taskDef.addContainer('superset-redis-container', this.redisContainerDef());
