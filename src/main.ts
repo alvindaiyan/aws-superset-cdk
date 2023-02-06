@@ -10,7 +10,6 @@ import { Construct } from 'constructs';
 import { Parameters } from './parameters';
 import { SecurityGroups } from './security_groups';
 import { SupersetCelery } from './superset_celery';
-import { SupersetDashboard } from './superset_dashboard';
 import { SupersetDatabase, SupersetDatabaseParam } from './superset_database';
 import { SupersetEcsCluster } from './superset_ecs_cluster';
 import { SupersetInitService } from './superset_init_service';
@@ -159,22 +158,28 @@ export class MyStack extends Stack {
     beatService.service.node.addDependency(dbService.service, redisService.service);
 
 
-    new SupersetDashboard(this, {
-      beatServiceName: beatService.service.serviceName,
-      workerServiceName: workerService.service.serviceName,
-      cluster: supersetCluster.cluster,
-      redisName: redisService.service.serviceName,
-      dbName: dbService.service.serviceName,
-      nodeService: nodeService.service.serviceName,
-      supersetService: supersetService.service.serviceName,
-      region: this.region,
-      supersetFileSystem: supersetService.fileSystem,
-      redisFileSystem: redisService.fs,
-      postgresFileSystem: dbService.fileSystem,
-      availabilityZone: supersetNetwork.supersetVpc.availabilityZones[0],
-      targetGroupFullName: supersetService.targetGroup.targetGroupFullName,
-      lb: supersetService.lb,
-      logGroup: logGroup,
+    // new SupersetDashboard(this, {
+    //   beatServiceName: beatService.service.serviceName,
+    //   workerServiceName: workerService.service.serviceName,
+    //   cluster: supersetCluster.cluster,
+    //   redisName: redisService.service.serviceName,
+    //   dbName: dbService.service.serviceName,
+    //   nodeService: nodeService.service.serviceName,
+    //   supersetService: supersetService.service.serviceName,
+    //   region: this.region,
+    //   supersetFileSystem: supersetService.fileSystem,
+    //   redisFileSystem: redisService.fs,
+    //   postgresFileSystem: dbService.fileSystem,
+    //   availabilityZone: supersetNetwork.supersetVpc.availabilityZones[0],
+    //   targetGroupFullName: supersetService.targetGroup.targetGroupFullName,
+    //   lb: supersetService.lb,
+    //   logGroup: logGroup,
+    // });
+
+    // Output
+    new cdk.CfnOutput(this, 'Superset web portal entry', {
+      value: supersetNetwork.nlb.loadBalancerDnsName,
+      description: 'the url for superset deployment',
     });
   }
 
