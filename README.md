@@ -31,7 +31,7 @@ Please checkout the official website: [https://superset.apache.org/](https://sup
    --parameters superset-cdk-dev:supersetsecretkey=your-superset-key
     ```
 
-## Configuring Superset through superset_config.py
+## Custom Superset configration through superset_config.py
 
 For configuration option please refer to the official website: [https://superset.apache.org/docs/installation/configuring-superset](https://superset.apache.org/docs/installation/configuring-superset)
 
@@ -39,7 +39,7 @@ After deploying the stack you can create a custom superset_config.py in /app/sup
 
 1. connect to the superset container
     ``` shell
-   aws ecs execute-command --cluster [cluster-name] --task [task-id] --container superset --command "/bin/bash" --interactive
+   aws ecs execute-command --cluster your-cluster-name --task task-id --container superset --command "/bin/bash" --interactive
     ```
 2. copy the content you want for the superset_config.py to your clipboard (cmd+C | ctrl+C)
 3. create a new config file in /app/superset_home
@@ -48,4 +48,11 @@ After deploying the stack you can create a custom superset_config.py in /app/sup
     ```
 4. paste the clipboard content (cmd+V | ctrl+V)
 5. end file input (cmd+D)
-6. through AWS console restart the container
+6. exit the container
+    ``` shell
+   exit
+   ```
+6. stop the container and it will automatically restart with the new configuration
+    ``` shell
+   aws ecs stop-task --cluster your-cluster-name --task task-id
+    ```
