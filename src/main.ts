@@ -89,6 +89,7 @@ export class MyStack extends Stack {
       withExample: parameters.allParameters.withExample.valueAsString,
       username: parameters.allParameters.username.valueAsString,
       userPassword: parameters.allParameters.userPassword.valueAsString,
+      secretKey: parameters.allParameters.secretKey.valueAsString,
       installProphet: parameters.allParameters.installProphet.valueAsString,
     });
     supersetService.service.node.addDependency(dbService.service, redisService.service);
@@ -106,6 +107,7 @@ export class MyStack extends Stack {
       withExample: parameters.allParameters.withExample.valueAsString,
       username: parameters.allParameters.username.valueAsString,
       userPassword: parameters.allParameters.userPassword.valueAsString,
+      secretKey: parameters.allParameters.secretKey.valueAsString,
       installProphet: parameters.allParameters.installProphet.valueAsString,
     });
     initService.service.node.addDependency(dbService.service, redisService.service);

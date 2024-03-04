@@ -31,6 +31,7 @@ export interface SupersetInitServiceParam {
   withExample: string;
   username: string;
   userPassword: string;
+  secretKey: string;
   installProphet: string;
 }
 
@@ -55,6 +56,7 @@ export class SupersetInitService {
   private readonly withExample: string;
   private readonly username: string;
   private readonly userPassword: string;
+  private readonly secretKey: string;
   private readonly installProphet: string;
 
   constructor(scope: Construct, params: SupersetInitServiceParam) {
@@ -72,6 +74,7 @@ export class SupersetInitService {
     this.withExample = params.withExample;
     this.username = params.username;
     this.userPassword = params.userPassword;
+    this.secretKey = params.secretKey;
     this.installProphet = params.installProphet;
 
     this.taskRole = this.supersetInitSvcTaskRole();
@@ -157,7 +160,7 @@ export class SupersetInitService {
         '/app/docker/docker-init.sh',
       ],
       essential: false,
-      image: ContainerImage.fromRegistry('public.ecr.aws/p9r6s5p7/superset:v2.0.0'),
+      image: ContainerImage.fromRegistry('public.ecr.aws/p9r6s5p7/superset:v3.0.0'),
       logging: LogDriver.awsLogs({
         logGroup: this.logGroup,
         streamPrefix: this.clusterName,
@@ -173,11 +176,11 @@ export class SupersetInitService {
         DATABASE_PASSWORD: 'superset',
         DATABASE_PORT: '5432',
         DATABASE_USER: 'superset',
-        FLASK_ENV: 'development',
+        FLASK_DEBUG: 'true',
         POSTGRES_DB: 'superset',
         POSTGRES_PASSWORD: 'superset',
         POSTGRES_USER: 'superset',
-        PYTHONPATH: '/app/pythonpath:/app/docker/pythonpath_dev',
+        PYTHONPATH: '/app/pythonpath:/app/docker/pythonpath_dev:/app/superset_home',
         REDIS_HOST: 'redis',
         REDIS_PORT: '6379',
         SUPERSET_ENV: 'development',
@@ -185,6 +188,7 @@ export class SupersetInitService {
         SUPERSET_PORT: '8088',
         SUPERSET_USER: this.username,
         SUPERSET_PASSWORD: this.userPassword,
+        SECRET_KEY: this.secretKey,
         InstallProphet: this.installProphet,
       },
     };
