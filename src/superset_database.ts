@@ -160,7 +160,7 @@ export class SupersetDatabase {
         DATABASE_PASSWORD: 'superset',
         DATABASE_PORT: '5432',
         DATABASE_USER: 'superset',
-        FLASK_ENV: 'development',
+        FLASK_DEBUG: 'true',
         POSTGRES_DB: 'superset',
         POSTGRES_PASSWORD: 'superset',
         POSTGRES_USER: 'superset',

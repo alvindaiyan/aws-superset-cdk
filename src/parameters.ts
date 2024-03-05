@@ -4,6 +4,7 @@ import { Construct } from 'constructs';
 export interface ParameterSummary {
   username: CfnParameter;
   userPassword: CfnParameter;
+  secretKey: CfnParameter;
   withExample: CfnParameter;
   installProphet: CfnParameter;
   vpcID: CfnParameter;
@@ -26,6 +27,7 @@ export class Parameters {
             Parameters: [
               parameters.username.logicalId,
               parameters.userPassword.logicalId,
+              parameters.secretKey.logicalId,
               parameters.withExample.logicalId,
               parameters.installProphet.logicalId,
               parameters.clusterName.logicalId,
@@ -50,6 +52,9 @@ export class Parameters {
           },
           [parameters.userPassword.logicalId]: {
             default: 'Initial Superset password',
+          },
+          [parameters.secretKey.logicalId]: {
+            default: 'Initial Superset secret_key',
           },
           [parameters.withExample.logicalId]: {
             default: 'Populate example dashboard',
@@ -90,6 +95,11 @@ export class Parameters {
         type: 'String',
         noEcho: true,
         description: 'Description: Superset password. A strict password policy is recommended.',
+      }),
+      secretKey: new CfnParameter(scope, 'superset-secretkey', <CfnParameterProps>{
+        type: 'String',
+        noEcho: true,
+        description: 'Description: Superset secret_key.',
       }),
       withExample: new CfnParameter(scope, 'superset-example', <CfnParameterProps>{
         type: 'String',
