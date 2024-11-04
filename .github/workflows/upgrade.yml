@@ -25,8 +25,6 @@ jobs:
         run: |-
           git add .
           git diff --staged --patch --exit-code > .repo.patch || echo "patch_created=true" >> $GITHUB_OUTPUT
-          ls -lah
-          pwd
         working-directory: ./
       - name: Upload patch
         if: steps.create_patch.outputs.patch_created
@@ -45,10 +43,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Debug
-        run: |-
-          pwd
-          ls -lah
       - name: Download patch
         uses: actions/download-artifact@v4
         with:
